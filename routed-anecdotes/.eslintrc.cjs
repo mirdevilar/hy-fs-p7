@@ -94,6 +94,7 @@ module.exports = {
     "arrow-body-style": "off",
     "react/jsx-one-expression-per-line": "off",
     "react/destructuring-assignment": "off",
+    "react/jsx-props-no-spreading": 0,
 
     // OVERRIDE AIRBNB
 
