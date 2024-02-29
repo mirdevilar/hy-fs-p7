@@ -110,7 +110,7 @@ module.exports = {
     // DEV
     "no-console": 0,
     "no-alert": 0,
-    "no-unused-vars": 0
+    "no-unused-vars": "warn",
   }
 }
 
