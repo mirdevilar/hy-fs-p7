@@ -91,6 +91,8 @@ module.exports = {
     "no-param-reassign": "off",
     "spaced-comment": "off",
     "max-len": "off",
+    "arrow-body-style": "off",
+    "react/jsx-one-expression-per-line": "off",
 
     // OVERRIDE AIRBNB
 
