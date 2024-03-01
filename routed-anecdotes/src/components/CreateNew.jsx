@@ -2,11 +2,11 @@ import { useNavigate } from 'react-router-dom'
 import useField from '../hooks/useField'
 
 const CreateNew = (props) => {
+  const navigate = useNavigate()
+
   const content = useField('text')
   const author = useField('text')
   const info = useField('text')
-
-  const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault()
