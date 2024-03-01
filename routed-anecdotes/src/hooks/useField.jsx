@@ -7,10 +7,15 @@ const useField = (type) => {
     setValue(e.target.value)
   }
 
+  const reset = () => {
+    setValue('')
+  }
+
+  const props = { value, type, onChange }
+
   return {
-    value,
-    type,
-    onChange,
+    props,
+    reset,
   }
 }
 
