@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useContext, useRef } from 'react'
 
 import Blog from './Blog'
 import CreateForm from './CreateForm'
@@ -6,7 +6,11 @@ import Toggleable from './Toggleable'
 
 import blogsService from '../services/blogsService'
 
-const BlogsSection = ({ blogs, setBlogs, user, notify }) => {
+import NotificationContext from '../contexts/NotificationContext'
+
+const BlogsSection = ({ blogs, setBlogs, user }) => {
+  const { notify } = useContext(NotificationContext)
+
   const createFormRef = useRef()
 
   const createBlog = async (blog) => {
@@ -36,6 +40,7 @@ const BlogsSection = ({ blogs, setBlogs, user, notify }) => {
     try {
       setBlogs(blogsCopy.filter(b => b.id !== blog.id))
       await blogsService.remove(blog.id, user.token)
+      notify(`Deleted blog ${blog.title}!`, 'green')
     } catch (error) {
       setBlogs(blogsCopy)
       notify(error.response.data.error, 'red')
