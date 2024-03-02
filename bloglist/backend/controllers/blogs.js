@@ -3,10 +3,15 @@ const Blog = require('../models/blog')
 
 const { userExtractor } = require('../utils/middleware')
 
+const userFields = {
+  username: 1,
+  name: 1,
+}
+
 router.get('/', async (request, response) => {
   const blogs = await Blog
     .find({})
-    .populate('user', { username: 1, name: 1 })
+    .populate('user', userFields)
 
   response.json(blogs)
 })
@@ -27,11 +32,16 @@ router.post('/', userExtractor, async (request, response) => {
   blog.user = user._id
 
   const createdBlog = await blog.save()
+  const id = createdBlog._id
 
-  user.blogs = user.blogs.concat(createdBlog._id)
+  user.blogs = user.blogs.concat(id)
   await user.save()
 
-  response.status(201).json(createdBlog)
+  const populatedBlog = await Blog
+    .findById(id)
+    .populate('user', userFields)
+
+  response.status(201).json(populatedBlog)
 })
 
 router.put('/:id', userExtractor, async (request, response) => {
@@ -43,19 +53,21 @@ router.put('/:id', userExtractor, async (request, response) => {
     return response.status(401).json({ error: 'operation not permitted' })
   }
 
-  const blog = await Blog.findById(request.params.id)
+  const blog = await Blog
+    .findById(request.params.id)
+    .populate('user', userFields)
 
-  if (!(requestUser.id !== blog.user)) {
+  if (requestUser.id !== blog.user) {
     blog.likes = likes
-    const savedBlog = await blog.save()
-    return response.json(savedBlog)
+  } else {
+    blog.title = title
+    blog.url = url
+    blog.author = author
+    blog.likes = likes
   }
 
-  blog.title = title
-  blog.url = url
-  blog.author = author
-  blog.likes = likes
-  const savedBlog = await blog.save()
+  savedBlog = await blog.save()
+  console.log(savedBlog)
   response.json(savedBlog)
 })
 

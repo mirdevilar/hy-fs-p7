@@ -1,23 +1,22 @@
 import { useEffect, useState, useReducer, useContext } from 'react'
+import { useQuery, useMutation } from '@tanstack/react-query'
 
 import BlogsSection from './components/BlogsSection'
 import Login from './components/Login'
 import Toggleable from './components/Toggleable'
 import Notification from './components/Notification'
 
-import blogsService from './services/blogsService'
 import CreateForm from './components/CreateForm'
 
-import NotificationContext from './contexts/NotificationContext'
-
 const App = () => {
-  const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
 
-  useEffect(() => {
-    blogsService.getAll()
-      .then(initialBlogs => {setBlogs(initialBlogs)})
-  }, [])
+  // const [blogs, setBlogs] = useState([])
+
+  // useEffect(() => {
+  //   blogsService.getAll()
+  //     .then(initialBlogs => {setBlogs(initialBlogs)})
+  // }, [])
 
   useEffect(() => {
     const storedUser = window.localStorage.getItem('user')
@@ -37,7 +36,7 @@ const App = () => {
       <Notification />
       {user && <p>Logged in as <b>{user.username}</b> <button onClick={handleLogout} >Log out</button></p>}
       {!user && <Login setUser={setUser} />}
-      {user && <BlogsSection blogs={blogs} setBlogs={setBlogs} user={user} />}
+      {user && <BlogsSection user={user} />}
     </div>
   )
 }
