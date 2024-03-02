@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 
-import loginService from '../services/loginService'
-import blogsService from '../services/blogsService'
+import UserContext from '../contexts/UserContext'
 
-const Login = ({ setUser }) => {
+const Login = () => {
+  const { login } = useContext(UserContext)
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -12,13 +13,12 @@ const Login = ({ setUser }) => {
   const handleLogin = async e => {
     e.preventDefault()
 
-    try {
-      const user = await loginService.login({ username, password })
-      setUser(user)
-      window.localStorage.setItem('user', JSON.stringify(user))
+    const loggedUser = login(username, password)
+
+    if (loggedUser) {
       setUsername('')
       setPassword('')
-    } catch (exception) {
+    } else {
       setErrorMessage('Wrong credentials!')
       setTimeout(() => {
         setErrorMessage(null)

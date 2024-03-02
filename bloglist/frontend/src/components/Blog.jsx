@@ -1,6 +1,9 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 
-const Blog = ({ user, blog, updateBlog, deleteBlog }) => {
+import UserContext from '../contexts/UserContext'
+
+const Blog = ({ blog, updateBlog, deleteBlog }) => {
+  const { user } = useContext(UserContext)
   const [displayDetails, setDisplayDetails] = useState(false)
 
   const toggleDetails = () => {
@@ -14,8 +17,7 @@ const Blog = ({ user, blog, updateBlog, deleteBlog }) => {
   }
 
   const handleLike = () => {
-    blog.likes += 1
-    updateBlog(blog)
+    updateBlog({ ...blog, likes: blog.likes + 1 })
   }
 
   const handleDelete = () => {

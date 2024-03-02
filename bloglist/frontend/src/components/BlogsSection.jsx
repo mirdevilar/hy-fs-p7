@@ -8,10 +8,12 @@ import Toggleable from './Toggleable'
 import blogsService from '../services/blogsService'
 
 import NotificationContext from '../contexts/NotificationContext'
+import UserContext from '../contexts/UserContext'
 
-const BlogsSection = ({ user }) => {
+const BlogsSection = () => {
   const queryClient = useQueryClient()
   const { notify } = useContext(NotificationContext)
+  const { user } = useContext(UserContext)
   const createFormRef = useRef()
 
   const { data: blogs, ...query } = useQuery({
@@ -22,7 +24,6 @@ const BlogsSection = ({ user }) => {
   const { mutate: createBlog } = useMutation({
     mutationFn: (blog) => blogsService.create(blog, user.token),
     onSuccess: (blog) => {
-      console.log(blog)
       queryClient.setQueryData(['blogs'], blogs.concat(blog))
       createFormRef.current.toggleDisplay()
       notify(`${blog.title} by ${blog.author} added!`, 'green')
@@ -53,29 +54,6 @@ const BlogsSection = ({ user }) => {
     }
   })
 
-  // const updateBlog = async (blog) => {
-  //   const blogsCopy = blogs
-  //   try {
-  //     setBlogs(blogsCopy.map(b => b.id !== blog.id ? b : blog))
-  //     const updatedBlog = await blogsService.update({ ...blog, user: blog.user.id }, user.token)
-  //   } catch (error) {
-  //     setBlogs(blogsCopy)
-  //     notify(error.response.data.error, 'red')
-  //   }
-  // }
-
-  // const deleteBlog = async (blog) => {
-  //   const blogsCopy = blogs
-  //   try {
-  //     setBlogs(blogsCopy.filter(b => b.id !== blog.id))
-  //     await blogsService.remove(blog.id, user.token)
-  //     notify(`Deleted blog ${blog.title}!`, 'green')
-  //   } catch (error) {
-  //     setBlogs(blogsCopy)
-  //     notify(error.response.data.error, 'red')
-  //   }
-  // }
-
   if (query.isLoading) {
     return <p>loading...</p>
   }
@@ -83,8 +61,6 @@ const BlogsSection = ({ user }) => {
   if (query.isError) {
     return <p>loading failed</p>
   }
-
-  console.log(blogs)
 
   return (
     <section>
@@ -95,8 +71,8 @@ const BlogsSection = ({ user }) => {
             <CreateForm
               blogs={blogs}
               token={user.token}
-              notify={notify}
-              createBlog={createBlog} />
+              createBlog={createBlog}
+            />
           </Toggleable>
           <br />
         </>
@@ -105,7 +81,6 @@ const BlogsSection = ({ user }) => {
         {blogs
           .sort((b1, b2) => b2.likes - b1.likes)
           .map(b => <Blog
-            user={user}
             blog={b}
             key={b.id}
             updateBlog={updateBlog}
