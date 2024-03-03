@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Blog from './components/Blog'
 import BlogsSection from './components/BlogsSection'
 import Login from './components/Login'
+import Navbar from './components/Navbar'
 import Notification from './components/Notification'
 import Users from './components/Users'
 import User from './components/User'
@@ -26,18 +27,16 @@ const App = () => {
 
   return (
     <div>
+      <Navbar />
       <h1><i>Blogs app</i></h1>
       <Notification />
 
-      {user && <p>Logged in as <b>{user.username}</b> <button onClick={logout} >Log out</button></p>}
-      {!user && <Login />}
-
       <Routes>
-        {matchedBlog && <Route path="/blogs/:id" element={<Blog blog={matchedBlog} />} />}
-        <Route path="/" element={<BlogsSection />} />
-
         {matchedUser && <Route path="/users/:username" element={<User user={matchedUser} />} />}
         <Route path="/users/*" element={<Users users={users} />} />
+
+        {matchedBlog && <Route path="/blogs/:id" element={<Blog blog={matchedBlog} />} />}
+        <Route path="/*" element={<BlogsSection />} />
       </Routes>
     </div>
   )
