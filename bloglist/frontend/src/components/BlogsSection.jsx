@@ -1,5 +1,6 @@
 import { useContext, useRef } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { Link } from 'react-router-dom'
 
 import Blog from './Blog'
 import CreateForm from './CreateForm'
@@ -7,52 +8,19 @@ import Toggleable from './Toggleable'
 
 import blogsService from '../services/blogsService'
 
+import BlogsContext from '../contexts/BlogsContext'
 import NotificationContext from '../contexts/NotificationContext'
 import UserContext from '../contexts/UserContext'
 
 const BlogsSection = () => {
-  const queryClient = useQueryClient()
-  const { notify } = useContext(NotificationContext)
   const { user } = useContext(UserContext)
+  const { query, blogs, createBlog, updateBlog, deleteBlog } = useContext(BlogsContext)
+
   const createFormRef = useRef()
 
-  const { data: blogs, ...query } = useQuery({
-    queryKey: ['blogs'],
-    queryFn: blogsService.getAll,
-  })
-
-  const { mutate: createBlog } = useMutation({
-    mutationFn: (blog) => blogsService.create(blog, user.token),
-    onSuccess: (blog) => {
-      queryClient.setQueryData(['blogs'], blogs.concat(blog))
-      createFormRef.current.toggleDisplay()
-      notify(`${blog.title} by ${blog.author} added!`, 'green')
-    },
-    onError: (error) => {
-      notify('Blog could not be created!', 'red')
-    },
-  })
-
-  const { mutate: updateBlog } = useMutation({
-    mutationFn: (blog) => blogsService.update({ ...blog }, user.token),
-    onSuccess: (blog) => {
-      queryClient.setQueryData(['blogs'], blogs.map((b) => b.id === blog.id ? blog : b))
-    },
-    onError: () => {
-      notify('Vote could not be sent!', 'red')
-    }
-  })
-
-  const { mutate: deleteBlog } = useMutation({
-    mutationFn: (blog) => blogsService.remove(blog.id, user.token),
-    onSuccess: (response, blog) => {
-      queryClient.setQueryData(['blogs'], blogs.filter(b => b.id !== blog.id))
-      notify(`Deleted blog ${blog.title}!`, 'green')
-    },
-    onError: () => {
-      notify('Blog could not be deleted!', 'red')
-    }
-  })
+  const closeForm = () => {
+    createFormRef.current.toggleDisplay()
+  }
 
   if (query.isLoading) {
     return <p>loading...</p>
@@ -76,21 +44,28 @@ const BlogsSection = () => {
             blogs={blogs}
             token={user.token}
             createBlog={createBlog}
+            close={closeForm}
           />
         }
       </Toggleable>
       <br />
-      <div>
+      <ul>
         {blogs
           .sort((b1, b2) => b2.likes - b1.likes)
-          .map(b => <Blog
-            blog={b}
-            key={b.id}
-            updateBlog={updateBlog}
-            deleteBlog={deleteBlog}
-          />)
+          // .map(b => <Blog
+          //   blog={b}
+          //   key={b.id}
+          //   updateBlog={updateBlog}
+          //   deleteBlog={deleteBlog}
+          // />)
+          .map(b =>
+            <li key={b.id}>
+              <a href={b.url}>{b.title}</a> by {b.author}
+            </li>
+          )
+          // add Link
         }
-      </div>
+      </ul>
     </section>
   )
 }

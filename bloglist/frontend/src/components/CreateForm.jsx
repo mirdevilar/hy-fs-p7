@@ -1,13 +1,43 @@
-import { useState } from 'react'
+import { useState, useContext, useRef } from 'react'
+import { useQueryClient, useMutation } from '@tanstack/react-query'
+
+import BlogsContext from '../contexts/BlogsContext'
+import NotificationContext from '../contexts/NotificationContext'
+import UserContext from '../contexts/UserContext'
 
 import blogsService from '../services/blogsService'
 
-const CreateForm = ({ createBlog }) => {
+const CreateForm = ({ close }) => {
+  // init required hooks
+  const queryClient = useQueryClient()
 
+  // fetch global states
+  const { blogs } = useContext(BlogsContext)
+  const { notify } = useContext(NotificationContext)
+  const { user } = useContext(UserContext)
+
+  // blog creation mutation
+  const { mutate: createBlog } = useMutation({
+    mutationFn: async (blog) => {
+      const createdBlog = await blogsService.create(blog, user.token)
+      return createdBlog
+    },
+    onSuccess: (blog) => {
+      queryClient.setQueryData(['blogs'], blogs.concat(blog))
+      close()
+      notify(`${blog.title} by ${blog.author} added!`, 'green')
+    },
+    onError: (error) => {
+      notify('Blog could not be created!', 'red')
+    },
+  })
+
+  // form fields
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
 
+  // create handler
   const handleCreate = (e) => {
     e.preventDefault()
 
