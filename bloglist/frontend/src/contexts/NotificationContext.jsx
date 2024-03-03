@@ -13,14 +13,20 @@ const notificationReducer = (state, action) => {
 
 const NotificationContext = createContext()
 
+let counter = 0
+
 export const NotificationContextProvider = (props) => {
   const [notification, notificationDispatch] = useReducer(notificationReducer)
 
   const notify = (msg, color) => {
     notificationDispatch({ type: 'SET', payload: { msg, color } })
+    counter++
+    const currentCount = counter
     setTimeout(() => {
-      notificationDispatch({ type: 'RESET' })
-    }, 3000)
+      if (currentCount === counter) {
+        notificationDispatch({ type: 'RESET' })
+      }
+    }, 10000)
   }
 
   return (
