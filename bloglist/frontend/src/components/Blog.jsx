@@ -1,19 +1,15 @@
 import { useState, useContext } from 'react'
 
+import BlogsContext from '../contexts/BlogsContext'
 import UserContext from '../contexts/UserContext'
 
-const Blog = ({ blog, updateBlog, deleteBlog }) => {
+const Blog = ({ blog }) => {
+
+  const { blogs, updateBlog, deleteBlog } = useContext(BlogsContext)
   const { user } = useContext(UserContext)
-  const [displayDetails, setDisplayDetails] = useState(false)
 
-  const toggleDetails = () => {
-    setDisplayDetails(!displayDetails)
-  }
-
-  const getDisplayDetails = () => {
-    return displayDetails ?
-      'hide' :
-      'show'
+  if (!blog) {
+    return null
   }
 
   const handleLike = () => {
@@ -36,16 +32,13 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
   return (
     <div style={blogStyle}>
       <p><a href={blog.url} >{blog.title}</a> by {blog.author}</p>
-      <button name={displayDetails ? 'hide' : 'show'} data-testid="toggle-details" onClick={toggleDetails}>{displayDetails ? 'hide' : 'show'}</button>
-      {displayDetails &&
-        <div>
-          <p data-testid="likes"> Likes: {blog.likes}
-            <button aria-label="like" disabled={!user} onClick={handleLike}>Like</button>
-          </p>
-          <p>Uploaded by {blog.user.username}</p>
-          {user && blog.user.username === user.username && <button name="delete" onClick={handleDelete}>Delete</button>}
-        </div>
-      }
+      <div>
+        <p data-testid="likes"> Likes: {blog.likes}
+          <button aria-label="like" disabled={!user} onClick={handleLike}>Like</button>
+        </p>
+        <p>Uploaded by {blog.user.username}</p>
+        {user && blog.user.username === user.username && <button name="delete" onClick={handleDelete}>Delete</button>}
+      </div>
     </div>
   )
 }

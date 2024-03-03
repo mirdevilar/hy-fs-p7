@@ -60,7 +60,7 @@ const BlogsSection = () => {
           // />)
           .map(b =>
             <li key={b.id}>
-              <a href={b.url}>{b.title}</a> by {b.author}
+              <Link to={`/blogs/${b.id}`}>{b.title}</Link> by {b.author}
             </li>
           )
           // add Link

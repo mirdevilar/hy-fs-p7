@@ -19,20 +19,6 @@ export const BlogsContextProvider = (props) => {
     queryFn: blogsService.getAll,
   })
 
-  const createBlogMutation = useMutation({
-    mutationFn: async (blog) => {
-      const createdBlog = await blogsService.create(blog, user.token)
-      return createdBlog
-    },
-    onSuccess: (blog) => {
-      queryClient.setQueryData(['blogs'], blogs.concat(blog))
-      notify(`${blog.title} by ${blog.author} added!`, 'green')
-    },
-    onError: (error) => {
-      notify('Blog could not be created!', 'red')
-    },
-  })
-
   const updateBlogMutation = useMutation({
     mutationFn: (blog) => blogsService.update({ ...blog }, user.token),
     onSuccess: (blog) => {
@@ -54,15 +40,14 @@ export const BlogsContextProvider = (props) => {
     }
   })
 
-  const createBlog = createBlogMutation.mutate
   const updateBlog = updateBlogMutation.mutate
   const deleteBlog = deleteBlogMutation.mutate
 
   return (
     <BlogsContext.Provider value={{
       query, blogs,
-      createBlogMutation, updateBlogMutation, deleteBlogMutation,
-      createBlog, updateBlog, deleteBlog,
+      updateBlogMutation, deleteBlogMutation,
+      updateBlog, deleteBlog,
     }}>
       {props.children}
     </BlogsContext.Provider>
