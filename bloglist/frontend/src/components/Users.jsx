@@ -1,7 +1,8 @@
+import { Link } from 'react-router-dom'
+
 import useResources from '../hooks/useResources'
 
-const Users = () => {
-  const [users, userService] = useResources()
+const Users = ({ users }) => {
 
   return (
     <div>
@@ -17,7 +18,7 @@ const Users = () => {
           {users.map(u =>
             <tr key={u.username}>
               <td>
-                {u.username}
+                <Link to={`/users/${u.username}`}>{u.username}</Link>
               </td>
               <td>
                 {u.blogs.length}
