@@ -29,8 +29,8 @@ const App = () => {
         {user && <p>Logged in as <b>{user.username}</b> <button onClick={handleLogout} >Log out</button></p>}
         {!user && <Login />}
         <Routes>
-          {user && <Route path="/" element={<BlogsSection />} />}
-          {user && <Route path="/users" element={<Users />} />}
+          <Route path="/" element={<BlogsSection />} />
+          <Route path="/users" element={<Users />} />
         </Routes>
       </div>
     </Router>

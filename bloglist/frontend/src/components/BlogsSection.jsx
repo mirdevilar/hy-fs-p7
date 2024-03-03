@@ -65,18 +65,21 @@ const BlogsSection = () => {
   return (
     <section>
       <h2><i>Blogs</i></h2>
-      {user &&
-        <>
-          <Toggleable showLabel='+ New' hideLabel="Cancel" ref={createFormRef}>
-            <CreateForm
-              blogs={blogs}
-              token={user.token}
-              createBlog={createBlog}
-            />
-          </Toggleable>
-          <br />
-        </>
-      }
+      <Toggleable
+        showLabel='+ New'
+        hideLabel="Cancel"
+        disable={!user}
+        ref={createFormRef}
+      >
+        {user &&
+          <CreateForm
+            blogs={blogs}
+            token={user.token}
+            createBlog={createBlog}
+          />
+        }
+      </Toggleable>
+      <br />
       <div>
         {blogs
           .sort((b1, b2) => b2.likes - b1.likes)

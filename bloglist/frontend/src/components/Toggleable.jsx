@@ -18,10 +18,15 @@ const Toggleable = forwardRef((props, refs) => {
   })
 
   return (
-    <>
+    <div>
       {display && props.children}
-      <button onClick={() => {setDisplay(!display)}} >{getButtonLabel()}</button>
-    </>
+      <button
+        onClick={() => {setDisplay(!display)}}
+        disabled={props.disable}
+      >
+        {getButtonLabel()}
+      </button>
+    </div>
   )
 })
 
