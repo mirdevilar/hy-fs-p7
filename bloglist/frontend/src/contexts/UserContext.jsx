@@ -1,4 +1,4 @@
-import { createContext, useReducer } from 'react'
+import { createContext, useReducer, useEffect } from 'react'
 
 import loginService from '../services/loginService'
 
@@ -40,6 +40,10 @@ export const UserContextProvider = (props) => {
     userDispatch({ type: 'REMOVE' })
     window.localStorage.removeItem('user')
   }
+
+  useEffect(() => {
+    loadUser()
+  }, [])
 
   return (
     <UserContext.Provider value={{ user, loadUser, login, logout }}>

@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
-import { useQueryClient, useQuery, useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
+import { useQueryClient, useQuery, useMutation } from '@tanstack/react-query'
 
 import BlogsContext from '../contexts/BlogsContext'
 import NotificationContext from '../contexts/NotificationContext'
@@ -9,13 +9,20 @@ import UserContext from '../contexts/UserContext'
 import blogsService from '../services/blogsService'
 
 const Blog = ({ blog }) => {
+  // use needed hooks
   const queryClient = useQueryClient()
   const navigate = useNavigate()
 
+  //-- STATE MANAGEMENT --//
+
+  // use states
   const { blogs } = useContext(BlogsContext)
   const { notify } = useContext(NotificationContext)
   const { user } = useContext(UserContext)
 
+  // MUTATIONS
+
+  // update
   const { mutate: updateBlog } = useMutation({
     mutationFn: (blog) => blogsService.update({ ...blog }, user.token),
     onSuccess: (blog) => {
@@ -26,6 +33,7 @@ const Blog = ({ blog }) => {
     }
   })
 
+  // delete
   const { mutate: deleteBlog } = useMutation({
     mutationFn: (blog) => blogsService.remove(blog.id, user.token),
     onSuccess: (response, blog) => {
@@ -38,9 +46,14 @@ const Blog = ({ blog }) => {
     }
   })
 
+  //----//
+
+  // keep under hooks!
   if (!blog) {
     return null
   }
+
+  // EVENT HANDLERS
 
   const handleLike = () => {
     updateBlog({ ...blog, likes: blog.likes + 1 })
@@ -52,6 +65,7 @@ const Blog = ({ blog }) => {
     }
   }
 
+  //
 
   const blogStyle = {
     backgroundColor: '#dae2ec',

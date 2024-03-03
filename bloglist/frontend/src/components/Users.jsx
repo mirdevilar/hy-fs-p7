@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom'
 
-import useResources from '../hooks/useResources'
-
 const Users = ({ users }) => {
 
   return (

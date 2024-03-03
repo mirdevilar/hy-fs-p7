@@ -3,13 +3,15 @@ import { useState, useContext } from 'react'
 import UserContext from '../contexts/UserContext'
 
 const Login = () => {
+  // use global states and managers
   const { login } = useContext(UserContext)
 
+  // component states
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-
   const [errorMessage, setErrorMessage] = useState(null)
 
+  // login handler
   const handleLogin = async e => {
     e.preventDefault()
 

@@ -26,7 +26,7 @@ export const NotificationContextProvider = (props) => {
       if (currentCount === counter) {
         notificationDispatch({ type: 'RESET' })
       }
-    }, 10000)
+    }, 3000)
   }
 
   return (

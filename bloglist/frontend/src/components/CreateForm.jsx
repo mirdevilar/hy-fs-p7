@@ -11,12 +11,12 @@ const CreateForm = ({ close }) => {
   // init required hooks
   const queryClient = useQueryClient()
 
-  // fetch global states
+  // use global states
   const { blogs } = useContext(BlogsContext)
   const { notify } = useContext(NotificationContext)
   const { user } = useContext(UserContext)
 
-  // blog creation mutation
+  // blog creation state manager
   const { mutate: createBlog } = useMutation({
     mutationFn: async (blog) => {
       const createdBlog = await blogsService.create(blog, user.token)
@@ -47,6 +47,8 @@ const CreateForm = ({ close }) => {
     setAuthor('')
     setUrl('')
   }
+
+  //
 
   return (
     <section>
