@@ -15,6 +15,7 @@ import UserContext from './contexts/UserContext'
 import useMatchedResource from './hooks/useMatchedResource'
 import useResources from './hooks/useResources'
 
+
 const App = () => {
   // states
   const { blogs } = useContext(BlogsContext)
@@ -26,18 +27,18 @@ const App = () => {
   const matchedBlog = useMatchedResource(blogs, '/blogs/:id')
 
   return (
-    <div>
+    <div className="min-h-screen font-mono bg-light-accent">
       <Navbar />
-      <h1><i>Blogs app</i></h1>
-      <Notification />
+      <div id="content" className="container mx-auto bg-light-accent mt-40">
+        <Notification />
+        <Routes>
+          {matchedUser && <Route path="/users/:username" element={<User user={matchedUser} />} />}
+          <Route path="/users/*" element={<Users users={users} />} />
 
-      <Routes>
-        {matchedUser && <Route path="/users/:username" element={<User user={matchedUser} />} />}
-        <Route path="/users/*" element={<Users users={users} />} />
-
-        {matchedBlog && <Route path="/blogs/:id" element={<Blog blog={matchedBlog} />} />}
-        <Route path="/*" element={<BlogsSection />} />
-      </Routes>
+          {matchedBlog && <Route path="/blogs/:id" element={<Blog blog={matchedBlog} />} />}
+          <Route path="/*" element={<BlogsSection />} />
+        </Routes>
+      </div>
     </div>
   )
 }

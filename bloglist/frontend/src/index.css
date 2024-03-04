@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  nav .button {
+    @apply bg-transparent text-light-accent font-bold px-1 my-1
+  }
+  nav .button:hover {
+    @apply bg-light-accent text-black
+  }
+  #content button:hover {
+    @apply bg-black text-light-accent font-bold px-1 my-1
+  }
+  #content button{
+    @apply text-black bg-light-accent font-bold px-1 my-1
+  }
+  nav input {
+    @apply bg-black w-40;
+    border-bottom: solid 1px !important;
+    outline: none!important;
+  }
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px black inset !important;
+  }
+  #content a {
+    @apply text-dark-accent font-bold
+  }
+  #content a:hover {
+    @apply bg-transparent text-black
+  }
+  #content h2 {
+    @apply text-4xl font-bold my-6
+  }
+  #content h3 {
+    @apply text-2xl font-bold my-6
+  }
+  #content input {
+    @apply bg-light-accent w-40;
+    border-bottom: solid 1px !important;
+    outline: none!important;
+  }
+  #content input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px black inset !important;
+  }
+}

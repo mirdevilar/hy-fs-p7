@@ -79,6 +79,7 @@ const Blog = ({ blog }) => {
   const handleSubmitComment = (e) => {
     e.preventDefault()
     addComment({ id: blog.id, comment: commentField })
+    setCommentField('')
   }
 
   //
@@ -91,20 +92,21 @@ const Blog = ({ blog }) => {
   }
 
   return (
-    <div style={blogStyle}>
-      <h3><a href={blog.url} >{blog.title}</a> by {blog.author}</h3>
+    <div>
+      <h2><a href={blog.url} >{blog.title}</a></h2>
+      <h3>by {blog.author}</h3>
       <div>
-        <p data-testid="likes"> Likes: {blog.likes}
-          <button aria-label="like" disabled={!user} onClick={handleLike}>Like</button>
+        <p data-testid="likes"> likes: {blog.likes}
+          {user && <button className="mx-2" aria-label="like" onClick={handleLike}>^ like</button>}
         </p>
-        <p>Uploaded by {blog.user.username}</p>
-        {user && blog.user.username === user.username && <button name="delete" onClick={handleDelete}>Delete</button>}
+        <p>uploaded by {blog.user.username}</p>
+        {user && blog.user.username === user.username && <button name="delete" onClick={handleDelete}>x delete</button>}
         <h3>Comments</h3>
         <form onSubmit={handleSubmitComment}>
           <input value={commentField} onChange={({ target }) => setCommentField(target.value)} />
-          <button type="submit">add</button>
+          <button type="submit">+ add</button>
         </form>
-        <ul>
+        <ul className="list-disc list-inside">
           {blog.comments.map((c, i) =>
             <li key={i}>{c}</li>
           )}

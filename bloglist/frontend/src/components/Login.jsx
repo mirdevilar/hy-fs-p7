@@ -30,23 +30,29 @@ const Login = () => {
 
   return (
     <section>
-      <h2><i>Log in</i></h2>
-      <form onSubmit={handleLogin}>
-        Username
-        <input
-          type="text"
-          value={username}
-          name="username"
-          onChange={({ target }) => {setUsername(target.value)}}
-        /><br />
-        Password
-        <input
-          type="password"
-          value={password}
-          name="password"
-          onChange={({ target }) => {setPassword(target.value)}}
-        /><br />
-        <button type="submit">Log in</button>
+      <form onSubmit={handleLogin} className="flex *:mx-4 *-md:max-w-20">
+        <div className="*:mx-2">
+          <label>username:</label>
+          <input
+            type="text"
+            value={username}
+            name="username"
+            onChange={({ target }) => {setUsername(target.value)}}
+            className="input"
+          />
+        </div>
+        <div className="*:px-2">
+          <label>password:</label>
+          <input
+            type="password"
+            value={password}
+            name="password"
+            onChange={({ target }) => {setPassword(target.value)}}
+          />
+        </div>
+        <div>
+          <button type="submit" className="button font-bold">log in</button>
+        </div>
         {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
       </form>
     </section>

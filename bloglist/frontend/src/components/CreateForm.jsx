@@ -52,30 +52,29 @@ const CreateForm = ({ close }) => {
 
   return (
     <section>
-      <h3>Add new blog</h3>
       <form onSubmit={handleCreate}>
-        <label htmlFor="title">Title:</label>
+        <label htmlFor="title">title: </label>
         <input
           type='text'
           value={title}
           aria-label="title"
           onChange={({ target }) => setTitle(target.value)}
         /><br />
-        <label htmlFor="author">Author:</label>
+        <label htmlFor="author">author: </label>
         <input
           type='text'
           value={author}
           aria-label="author"
           onChange={({ target }) => setAuthor(target.value)}
         /><br />
-        <label htmlFor="url">URL:</label>
+        <label htmlFor="url">url: </label>
         <input
           type='url'
           value={url}
           aria-label='url'
           onChange={({ target }) => setUrl(target.value)}
         /><br />
-        <button type="submit">Submit</button>
+        <button type="submit">submit {'>'}</button>
       </form>
     </section>
   )

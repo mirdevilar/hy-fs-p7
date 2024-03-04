@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 import App from './App.jsx'
+import './index.css'
 import { BlogsContextProvider } from './contexts/BlogsContext'
 import { NotificationContextProvider } from './contexts/NotificationContext'
 import { UserContextProvider } from './contexts/UserContext'

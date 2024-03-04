@@ -39,17 +39,17 @@ const BlogsSection = () => {
 
   return (
     <section>
-      <h2><i>Blogs</i></h2>
-      <Toggleable
-        showLabel='+ New'
-        hideLabel="Cancel"
-        disable={!user}
-        ref={createFormRef}
-      >
-        {user &&
+      <h2>Blogs</h2>
+      {user &&
+        <Toggleable
+          showLabel='+ new'
+          hideLabel="x cancel"
+          disable={!user}
+          ref={createFormRef}
+        >
           <CreateForm close={closeForm} />
-        }
-      </Toggleable>
+        </Toggleable>
+      }
       <br />
       <ul>
         {blogs
