@@ -88,4 +88,14 @@ router.delete('/:id', userExtractor, async (request, response) => {
   response.status(204).end()
 })
 
+router.post('/:id/comments', async (request, response) => {
+  const blog = await Blog
+    .findById(request.params.id)
+  
+  blog.comments.push(request.body.comment)
+
+  const savedBlog = await blog.save()
+  response.json(savedBlog.comments)
+})
+
 module.exports = router

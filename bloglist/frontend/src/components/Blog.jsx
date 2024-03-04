@@ -76,13 +76,19 @@ const Blog = ({ blog }) => {
 
   return (
     <div style={blogStyle}>
-      <p><a href={blog.url} >{blog.title}</a> by {blog.author}</p>
+      <h3><a href={blog.url} >{blog.title}</a> by {blog.author}</h3>
       <div>
         <p data-testid="likes"> Likes: {blog.likes}
           <button aria-label="like" disabled={!user} onClick={handleLike}>Like</button>
         </p>
         <p>Uploaded by {blog.user.username}</p>
         {user && blog.user.username === user.username && <button name="delete" onClick={handleDelete}>Delete</button>}
+        <h3>Comments</h3>
+        <ul>
+          {blog.comments.map((c, i) =>
+            <li key={i}>{c}</li>
+          )}
+        </ul>
       </div>
     </div>
   )
