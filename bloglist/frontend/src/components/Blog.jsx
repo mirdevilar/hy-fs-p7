@@ -19,6 +19,7 @@ const Blog = ({ blog }) => {
   const { blogs } = useContext(BlogsContext)
   const { notify } = useContext(NotificationContext)
   const { user } = useContext(UserContext)
+  const [commentField, setCommentField] = useState('')
 
   // MUTATIONS
 
@@ -46,6 +47,16 @@ const Blog = ({ blog }) => {
     }
   })
 
+  const { mutate: addComment } = useMutation({
+    mutationFn: ({ id, comment }) => blogsService.createComment(id, comment),
+    onSuccess: (comments, { id }) => {
+      queryClient.setQueryData(['blogs'], blogs.map(b => b.id === id
+        ? { ...b, comments }
+        : b
+      ))
+    }
+  })
+
   //----//
 
   // keep under hooks!
@@ -63,6 +74,11 @@ const Blog = ({ blog }) => {
     if (window.confirm('Are you sure you want to delete the blog?')) {
       deleteBlog(blog)
     }
+  }
+
+  const handleSubmitComment = (e) => {
+    e.preventDefault()
+    addComment({ id: blog.id, comment: commentField })
   }
 
   //
@@ -84,6 +100,10 @@ const Blog = ({ blog }) => {
         <p>Uploaded by {blog.user.username}</p>
         {user && blog.user.username === user.username && <button name="delete" onClick={handleDelete}>Delete</button>}
         <h3>Comments</h3>
+        <form onSubmit={handleSubmitComment}>
+          <input value={commentField} onChange={({ target }) => setCommentField(target.value)} />
+          <button type="submit">add</button>
+        </form>
         <ul>
           {blog.comments.map((c, i) =>
             <li key={i}>{c}</li>
