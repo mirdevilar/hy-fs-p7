@@ -31,7 +31,7 @@ const Login = () => {
   return (
     <section>
       <form onSubmit={handleLogin} className="flex *:mx-4 *-md:max-w-20">
-        <div className="*:mx-2">
+        <div className="flex *:my-auto *:mx-2 ">
           <label>username:</label>
           <input
             type="text"
@@ -41,7 +41,7 @@ const Login = () => {
             className="input"
           />
         </div>
-        <div className="*:px-2">
+        <div className="flex *:my-auto *:px-2 ">
           <label>password:</label>
           <input
             type="password"

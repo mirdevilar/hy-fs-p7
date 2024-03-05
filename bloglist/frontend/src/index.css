@@ -4,16 +4,18 @@
 
 @layer utilities {
   nav .button {
-    @apply bg-transparent text-light-accent font-bold px-1 my-1
+    @apply bg-transparent text-light-accent font-bold px-1 my-1 border-light-accent;
+    border: solid 1px;
   }
   nav .button:hover {
-    @apply bg-light-accent text-black
-  }
-  #content button:hover {
-    @apply bg-black text-light-accent font-bold px-1 my-1
+    @apply bg-light-accent text-black;
   }
   #content button{
-    @apply text-black bg-light-accent font-bold px-1 my-1
+    @apply text-black bg-light-accent font-bold px-1 my-1 border-black;
+    border: solid 1px;
+  }
+  #content button:hover {
+    @apply bg-black text-light-accent;
   }
   nav input {
     @apply bg-black w-40;
