@@ -1,13 +1,13 @@
-import { useContext } from 'react'
+import { useContext } from "react";
 
-import NotificationContext from '../contexts/NotificationContext'
+import NotificationContext from "../contexts/NotificationContext";
 
 const Notification = () => {
-  const { notification } = useContext(NotificationContext)
+  const { notification } = useContext(NotificationContext);
 
   if (notification) {
-    return <p style={{ color: notification.color }}>{notification.msg}</p>
+    return <p style={{ color: notification.color }}>{notification.msg}</p>;
   }
-}
+};
 
-export default Notification
+export default Notification;

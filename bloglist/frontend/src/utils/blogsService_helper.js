@@ -1,5 +1,5 @@
 const parseAuthHeader = (token) => {
-  return `Bearer ${token}`
-}
+  return `Bearer ${token}`;
+};
 
-export default { parseAuthHeader }
+export default { parseAuthHeader };

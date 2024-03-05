@@ -15,7 +15,8 @@ import blogsService from '../services/blogsService'
 const BlogsSection = () => {
   // use states and managers
   const { user } = useContext(UserContext)
-  const { query, blogs, createBlog, updateBlog, deleteBlog } = useContext(BlogsContext)
+  const { query, blogs, createBlog, updateBlog, deleteBlog } =
+    useContext(BlogsContext)
 
   // init ref for form display toggling
   const createFormRef = useRef()
@@ -40,26 +41,25 @@ const BlogsSection = () => {
   return (
     <section>
       <h2>Blogs</h2>
-      {user &&
+      {user && (
         <Toggleable
-          showLabel='+ new'
+          showLabel="+ new"
           hideLabel="x cancel"
           disable={!user}
           ref={createFormRef}
         >
           <CreateForm close={closeForm} />
         </Toggleable>
-      }
+      )}
       <br />
       <ul>
         {blogs
           .sort((b1, b2) => b2.likes - b1.likes)
-          .map(b =>
+          .map((b) => (
             <li key={b.id}>
               <Link to={`/blogs/${b.id}`}>{b.title}</Link> by {b.author}
             </li>
-          )
-        }
+          ))}
       </ul>
     </section>
   )

@@ -1,35 +1,35 @@
-import { useState, useImperativeHandle, forwardRef } from 'react'
+import { useState, useImperativeHandle, forwardRef } from "react";
 
 const Toggleable = forwardRef((props, refs) => {
-  const [display, setDisplay] = useState(false)
+  const [display, setDisplay] = useState(false);
 
   const getButtonLabel = () => {
-    return display ?
-      props.hideLabel :
-      props.showLabel
-  }
+    return display ? props.hideLabel : props.showLabel;
+  };
 
   const toggleDisplay = () => {
-    setDisplay(!display)
-  }
+    setDisplay(!display);
+  };
 
   useImperativeHandle(refs, () => {
-    return { toggleDisplay }
-  })
+    return { toggleDisplay };
+  });
 
   return (
     <div>
       {display && props.children}
       <button
-        onClick={() => {setDisplay(!display)}}
+        onClick={() => {
+          setDisplay(!display);
+        }}
         disabled={props.disable}
       >
         {getButtonLabel()}
       </button>
     </div>
-  )
-})
+  );
+});
 
-Toggleable.displayName = 'Toggleable'
+Toggleable.displayName = "Toggleable";
 
-export default Toggleable
+export default Toggleable;

@@ -1,12 +1,12 @@
-import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 
-import Login from '../components/Login'
+import Login from "../components/Login";
 
-import UserContext from '../contexts/UserContext'
+import UserContext from "../contexts/UserContext";
 
 const Navbar = () => {
-  const { user, logout } = useContext(UserContext)
+  const { user, logout } = useContext(UserContext);
 
   return (
     <nav className="bg-black text-light-accent py-4 sticky top-0">
@@ -14,7 +14,9 @@ const Navbar = () => {
         <div className="flex items-center">
           <div className="flex items-center max-w-fit">
             <div>
-              <a href="/" className="text-3xl font-bold text-light-accent">{'<Bloglist />'}</a>
+              <a href="/" className="text-3xl font-bold text-light-accent">
+                {"<Bloglist />"}
+              </a>
             </div>
             <div className="flex items-center px-4 *:mx-2 *:button">
               <Link to="/">blogs</Link>
@@ -23,17 +25,19 @@ const Navbar = () => {
           </div>
           <div className="ml-auto">
             {!user && <Login />}
-            {user &&
+            {user && (
               <div className="*:mx-4">
                 <span>{user.username}</span>
-                <button className="button" onClick={logout} >log out</button>
+                <button className="button" onClick={logout}>
+                  log out
+                </button>
               </div>
-            }
+            )}
           </div>
         </div>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
